@@ -57,7 +57,7 @@ const Post = (props) => {
 
     useEffect (() => {
         if (!users[signingKeyId]) {
-            getUserData(signingKeyId);
+            getUserData(metadata.author);
         }
     }, [expandedPost]);
 

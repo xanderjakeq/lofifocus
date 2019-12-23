@@ -92,15 +92,19 @@ export const getNewNotifsCount = (username, subbed_models, lastSeen) => async (d
 		type: GETTING_NEW_NOTIFS_COUNT
 	});
 
-	const subbed_models_notifs = await Notification.fetchList({
-		author: {
-			$ne: username
-		},
-		notif_for: subbed_models,
-		createdAt: {
-			$gt: lastSeen
-		}
-	});
+	let subbed_models_notifs = [];
+
+	if (subbed_models.length > 0 ) {
+		subbed_models_notifs = await Notification.fetchList({
+			author: {
+				$ne: username
+			},
+			notif_for: subbed_models,
+			createdAt: {
+				$gt: lastSeen
+			}
+		});
+	}
 
 	const mentions_notifs = await Notification.fetchList({
 		author: {

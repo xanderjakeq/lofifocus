@@ -50,7 +50,8 @@ export const getCustomUser = ({profile, username}) => async (dispatch) => {
     });
 
     const exists = await AnyListUser.fetchList({
-        username
+        username,
+        sort: 'createdAt'
     });
 
     let user;
@@ -78,13 +79,14 @@ export const getCustomUser = ({profile, username}) => async (dispatch) => {
     });
 }
 
-export const getUserData = (signingKeyId) => async (dispatch) => {
+export const getUserData = (username) => async (dispatch) => {
     dispatch({
         type: GETTING_USER_DATA
     });
 
     const user = await AnyListUser.fetchList({
-        signingKeyId
+        username,
+        sort: 'createdAt'
     });
 
     dispatch({
