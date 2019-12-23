@@ -121,7 +121,7 @@ const ListPage = (props) => {
 		uploadBanner(userSession, listData, file);
 	}
 
-	return (
+	return listData._id ? (
 		<ListPageWrapper>
 			{
 				isDeleting ? 
@@ -224,6 +224,10 @@ const ListPage = (props) => {
 			
 		</ListPageWrapper>
 	)
+	:
+	<ListPageWrapper>
+		<h1>List does not exist</h1>
+	</ListPageWrapper>
 }
 
 const mstp = (state) => {

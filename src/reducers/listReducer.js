@@ -14,18 +14,31 @@ const initialState = {
 
 const branchTable = {
 	[actions.SET_ACTIVE_LIST]: (state, action) => {
-		return {
-			...state, activeList: action.payload
+		if (action.payload) { 
+			return {
+				...state, activeList: action.payload
+			}
+		} else { 
+			return { 
+				...state, activeList: initialState.activeList
+			}
 		}
 	},
 	[actions.LIST_DATA_RECEIVED]: (state, action) => {
-		return {
-			...state, 
-			allLists: {
-				...state.allLists,
-				[action.payload._id]: action.payload
+		if (action.payload) { 
+			return {
+				...state, 
+				allLists: {
+					...state.allLists,
+					[action.payload._id]: action.payload
+				}
+			}
+		} else { 
+			return { 
+				...state
 			}
 		}
+		
 	},
 	[actions.RECEIVED_PROFILE_LISTS]: (state, action) => {
 		return {
