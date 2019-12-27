@@ -5,6 +5,8 @@ const initialState = {
 	feedPosts: [],
 	listPosts: [],
 	lists: {},
+	searchString: "",
+	searchResults: [],
 	isGettingPosts: false,
 	expandedPost: {
 		attrs: {
@@ -27,7 +29,6 @@ const branchTable = {
 			hasMore = false;
 		}
 
-
 		const hash = {};
 		return {
 			...state,
@@ -41,6 +42,35 @@ const branchTable = {
 				}
 			}),
 			feedHasMore: hasMore
+		}
+	},
+	[actions.SET_SEARCH_STRING]: (state, action) => {
+
+		return {
+			...state, 
+			searchString: action.payload,
+			searchResults: []
+		}
+	},
+	[actions.RECEIVED_SEARCHED_POSTS]: (state, action) => {
+		let hasMore = true;
+		if (action.payload.length === 0) {
+			hasMore = false;
+		}
+
+		const hash = {};
+
+		return {
+			...state, 
+			searchResults: [...state.searchResults, ...action.payload].filter((v, i, s) => {
+					if (!Object.keys(hash).includes(v._id)){
+						hash[v._id] = 0;
+						return true;
+					} else {
+						return false;
+					}
+				}),
+			hasMore
 		}
 	},
 	[actions.RECEIVED_POSTS]: (state, action) => {

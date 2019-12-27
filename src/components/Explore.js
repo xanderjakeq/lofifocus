@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { getPosts } from '../actions';
-import { PostComp } from './index';
+import { getPosts, setSearchString, searchPosts } from '../actions';
+import { PostComp, SearchBar } from './index';
 
 const Explore = (props) => {
 
-    const { getPosts, posts, hasMore } = props;
+    const { posts, searchString, searchResults, hasMore } = props;
 
+    const { getPosts, setSearchString, searchPosts } = props;
+    
     useEffect(() => {
         if (posts.length === 0) {
-            getPosts(props.posts.length, 5)
+            getPosts(posts.length);
         }
-    }, [])
+    }, []);
 
     const loadMore = () => {
-        getPosts(props.posts.length, 5);
+        if (searchString.length > 0) { 
+            searchPosts(searchString, searchResults.length);
+        } else { 
+            getPosts(posts.length);
+        }
     }
 
     return (
@@ -26,8 +32,16 @@ const Explore = (props) => {
             hasMore = {hasMore}
             loader = {<div className="loader" key={0}>Loading ...</div>}
         >
+
+            <SearchBar placeholder = "Search #tags and @mentions" value = {searchString} onChange = {e => setSearchString(e.target.value)} onSubmit = {searchPosts}/>
+
             {
-                props.posts.map(post => {
+                searchString.length > 0 ?
+                searchResults.map(post => {
+                    return <PostComp key = {post._id} post={post} preview = {true}/>;
+                })
+                :
+                posts.map(post => {
                     return <PostComp key = {post._id} post={post} preview = {true}/>;
                 })
             }
@@ -38,9 +52,11 @@ const Explore = (props) => {
 const mstp = (state) => {
     return {
         posts: state.posts.listPosts,
+        searchString: state.posts.searchString,
+        searchResults: state.posts.searchResults,
         followedLists: state.auth.anylistUser.attrs.followedLists,
-        hasMore: state.posts.hasMore
+        hasMore: state.posts.hasMore,
     }
 }
 
-export default connect(mstp, {getPosts})(Explore);
+export default connect(mstp, {getPosts, setSearchString, searchPosts})(Explore);
