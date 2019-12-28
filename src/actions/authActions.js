@@ -1,7 +1,4 @@
-import  { AnyListUser } from '../models';
-import { uploadFile, isImageFileSizeAcceptable, compressImage } from '../utils/helpers';
-
-import { ERROR } from './index';
+import  { User } from '../models';
 
 export const SIGNIN= "SIGNIN";
 export const SIGNOUT = "SIGNOUT";
@@ -30,7 +27,10 @@ export function handleSignIn(e, userSession) {
 }
 
 export function handleSignOut(e, userSession) {
-    e.preventDefault();
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+
     userSession.signUserOut(window.location.origin);
     return {
         type: SIGNOUT
@@ -49,17 +49,18 @@ export const getCustomUser = ({profile, username}) => async (dispatch) => {
         type: GETTING_CUSTOM_USER
     });
 
-    const exists = await AnyListUser.fetchList({
+    const exists = await User.fetchList({
         username,
         sort: 'createdAt'
     });
 
     let user;
 
+
     if (exists.length > 0) {
         user = exists[0];
     } else {
-        const newuser = new AnyListUser({
+        const newuser = new User({
             name: profile.name,
             username,
             description: profile.description,
@@ -84,7 +85,7 @@ export const getUserData = (username) => async (dispatch) => {
         type: GETTING_USER_DATA
     });
 
-    const user = await AnyListUser.fetchList({
+    const user = await User.fetchList({
         username,
         sort: 'createdAt'
     });
@@ -95,59 +96,20 @@ export const getUserData = (username) => async (dispatch) => {
     });
 }
 
-export const setActiveProfile = (AnyListUser) => {
-    return {
-        type: SET_ACTIVE_PROFILE,
-        payload: AnyListUser
-    }
-}
 
-export const updateUser = (AnyListUser, updates) => async (dispatch) => {
+export const updateUser = (user, updates) => async (dispatch) => {
     dispatch({
         type: UPDATING_USER
     });
 
-    AnyListUser.update(updates);
+    user.update(updates);
 
-    const updatedUser = await AnyListUser.save();
+    await user.save();
+
+    const updatedUser = new User(user.attrs);
 
     dispatch({
         type: USER_UPDATED,
         payload: updatedUser
     })
-}
-
-export const uploadAvatar = (userSession, user, file) => async (dispatch) => {
-    dispatch({
-        type: UPLOADING_AVATAR
-    });
-
-    let link;
-
-    const process = async () => {
-        user.update({
-            other: {
-                ...user.attrs.other,
-                avatarUrl: link
-            }
-        });
-
-        const updatedUser = await user.save();
-
-        dispatch({
-            type: USER_UPDATED,
-            payload: updatedUser
-        });
-    }
-
-    if (isImageFileSizeAcceptable(file.size)) {
-        link = await uploadFile(userSession, "avatars", file, {encrypt:false});
-        process();
-    } else {
-        compressImage(file, async (compressed) => { 
-            file = compressed;
-            link = await uploadFile(userSession, "avatars", file, {encrypt:false});
-            process();
-        });
-    }
 }

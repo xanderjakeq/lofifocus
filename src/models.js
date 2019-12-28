@@ -36,8 +36,8 @@ export class SocialliConfig extends Model {
     }
 }
 
-export class AnyListUser extends Model {
-    static className = 'AnyListUser';
+export class User extends Model {
+    static className = 'User';
     static schema = {
         name: {
             type: String,
@@ -47,12 +47,15 @@ export class AnyListUser extends Model {
             type: String,
             decrypted: true
         },
-        description: {
-            type: String,
-            decrypted: true
+        license: {
+            type: String
         },
-        followedLists: Array,
-        followedPosts: Array,
+        averageSession: {
+            type: Number
+        },
+        preferences: {
+            type: Object
+        },
         other: {
             type: Object,
             decrypted: true
@@ -60,9 +63,21 @@ export class AnyListUser extends Model {
     }
 
     static defaults = {
-        followedLists: [],
-        followedPosts: [],
+        averageSession: 0,
+        preferences: {},
         other: {}
+    }
+}
+
+export class Session extends Model { 
+    static className = "Sessions";
+    static schema = { 
+        date: {
+            type: Number
+        },
+        duration: {
+            type: Number
+        }
     }
 }
 
