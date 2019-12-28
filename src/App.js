@@ -6,27 +6,28 @@ import {
   AppConfig
 } from 'blockstack';
 
-import { Main, Signin, NoAccessMessage } from './components';
-import { storeUserSession, getCustomUser } from './actions';
-import { List } from './models';
-
-import socialli_config from './socialli_config';
+import { Main } from './components';
+import { storeUserSession, getCustomUser, handleSignOut } from './actions';
 
 const appConfig = new AppConfig(
   ["store_write", "publish_data"],
-)
+);
 
-const userSession = new UserSession({ appConfig: appConfig })
+const userSession = new UserSession({ appConfig: appConfig });
 
 configure({
     apiServer: process.env.REACT_APP_SERVER ? process.env.REACT_APP_SERVER : 'http://localhost:5000',
     userSession
-})
+});
+
+const noUsernameMessage = "You need to have a username with your Blockstack ID.\n " + 
+                          "You can add a username to your Blockstack ID here: https://browser.blockstack.org/profiles \n\n" + 
+                          "Signing Out"; 
 
 const App = (props) => {
 
-    document.title = socialli_config.instance_name;
-    
+    const { handleSignOut } = props;
+
     const [userData, setUserData] = useState({});
 
     props.storeUserSession(userSession);
@@ -36,38 +37,39 @@ const App = (props) => {
             let data;
             if (userSession.isSignInPending()) {
                 await userSession.handlePendingSignIn().then( async (userData) => {
-                    window.history.replaceState({}, document.title, "/")
-                    setUserData(userData);
-                    data = userData;
+                    if (userData.username) {
+                      window.history.replaceState({}, document.title, "/")
+                      setUserData(userData);
+                      data = userData;
+                    } else {
+                      alert(noUsernameMessage);
+                      handleSignOut({}, userSession);
+                    }
+                    
                 });
                 await User.createWithCurrentUser();
                 props.getCustomUser(data)
             } else if (userSession.isUserSignedIn()) {
                 data = userSession.loadUserData();
-                setUserData(data);
-                props.getCustomUser(data)
+                if (data.username) {
+                  setUserData(data);
+                  props.getCustomUser(data)
+                } else {
+                  alert(noUsernameMessage);
+                  handleSignOut({}, userSession);
+                }
             }
         }
         isSigninPending(userSession);
     }, []);
     return (
-      <div>
-        { !userSession.isUserSignedIn() ?
-          <Signin/>
-          : 
-          userData.username ?
-          <Main/>
-          :
-          <NoAccessMessage fullWidth/>
-        }
-      </div>
+        <Main/>
     );
 }
 
 const mstp = state => {
     return {
-        userSession: state.auth.userSession
     }
 }
 
-export default connect(mstp, {storeUserSession, getCustomUser})(App);
+export default connect(mstp, {storeUserSession, getCustomUser, handleSignOut})(App);

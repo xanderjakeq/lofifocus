@@ -1,7 +1,7 @@
 import * as actions from '../actions';
 
 const initialState = {
-    anylistUser: {
+    User: {
         attrs: {
             followedLists: []
         }
@@ -32,7 +32,7 @@ const branchTable = {
         return {
             ...state,
             findingUser: false,
-            anylistUser: actions.payload,
+            User: actions.payload,
             users: {
                 ...state.users, 
                 [actions.payload.attrs.signingKeyId]: actions.payload
@@ -51,7 +51,7 @@ const branchTable = {
     [actions.USER_UPDATED]: (state, actions) => {
         return {
             ...state,
-            anylistUser: actions.payload,
+            User: actions.payload,
             activeProfile: actions.payload,
             uploadingAvatar: false
         }

@@ -51,3 +51,6 @@ notes.md
 .env
 
 .vscode
+
+# Ignore firebase cache
+.firebase
