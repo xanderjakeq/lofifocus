@@ -77,7 +77,7 @@ const LofiFocus = (props) => {
 			if (username) {
 				const sessionDuration = getDuration();
 				updateUser(user, {
-					averageSession:  ((sessionDuration + averageSession) / 2).toFixed(2)
+					averageSession: averageSession > 0 ? ((sessionDuration + averageSession) / 2).toFixed(2) : sessionDuration
 				});
 				createSession(startSession, getDuration());
 			}
