@@ -101,18 +101,18 @@ const LofiFocus = (props) => {
 				}
 			</div>
 			<div className = "volumeSliders">
-				<Player name = "noise" 
-						elRef = {noiseRef} 
-						tracks = { tracks.noiseTracks } 
-						volume = { noiseVolume } 
-						handleVolume = {e => handleVolume(e, setNoiseVolume) }
-						loop
-				/>
 				<Player name = "lofi" 
 						elRef = {lofiRef} 
 						tracks = { tracks.lofiTracks }
 						volume = { lofiVolume } 
 						handleVolume = {e => handleVolume(e, setLofiVolume) }
+						loop
+				/>
+				<Player name = "noise" 
+						elRef = {noiseRef} 
+						tracks = { tracks.noiseTracks } 
+						volume = { noiseVolume } 
+						handleVolume = {e => handleVolume(e, setNoiseVolume) }
 						loop
 				/>
 				{
