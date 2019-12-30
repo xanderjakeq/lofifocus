@@ -20,6 +20,7 @@ const FakeLinkWrapper = styled.button`
 	border: none;
 
 	margin: 5px 0;
+	margin-right: 10px;
 
 	font-family: inherit;
 	font-size: 15px;
