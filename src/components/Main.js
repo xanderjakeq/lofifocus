@@ -4,10 +4,12 @@ import styled from 'styled-components';
 
 import { LofiFocus, FakeLink, Profile } from './index';
 import { breakpoint } from '../utils/styleConsts';
+import help from '../imgs/lofifocus-help.png';
 
 const Main = (props) => {
 
     const [isProfileVisible, setIsProfileVisible] = useState(false);
+    const [isHelpVisible, setIsHelpVisible] = useState(false);
 
     return (
         <Router>
@@ -18,7 +20,14 @@ const Main = (props) => {
                     
                     <nav id = "nav">
                         <FakeLink text = "profile" onClick = {() => setIsProfileVisible(!isProfileVisible)} />
+                        <FakeLink text = "help" onClick = {() => setIsHelpVisible(!isHelpVisible)} />
                     </nav>
+                    {
+                        isHelpVisible ?
+                        <img src = {help} alt = "Help" id = "help-image"/>
+                        :
+                        null
+                    }
 
                 </div>
                     
@@ -44,19 +53,12 @@ const MainWrapper = styled.div`
         padding: 0;
     }
 
-    // display: grid;
-    // height: 100%;
-    // grid-template-areas: "nav main side";
-    // grid-template-rows: 1fr;
-    // grid-template-columns: .5fr 3fr .5fr;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
     height: 100vh;
     
-
     font-family: 'Work Sans', sans-serif;
 
     a {
@@ -66,11 +68,6 @@ const MainWrapper = styled.div`
         }
     }
 
-    .DraftEditor-root {
-        margin: 10px 0;
-        line-height: initial;
-	}
-
     #nav {
         margin-left: 70px;
     }
@@ -79,7 +76,17 @@ const MainWrapper = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
+        position: relative;
+
+        #help-image {
+            position: absolute;
+            top: auto;
+            right: 100%;
+            width: 500px;
+        }
     }
+
+
     #aside {
         position: absolute;
         right: 0;
