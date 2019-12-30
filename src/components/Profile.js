@@ -35,7 +35,7 @@ const Profile = (props) => {
 	}
 
 	return username ? (
-		<ProfileWrapper  ref={(ref) => setScrollParentRef(ref)}>
+		<ProfileWrapper>
 			<div id = "profile-wrapper">
 				<button
 					onClick={ (e) => handleSignOut(e, userSession)}
@@ -48,7 +48,7 @@ const Profile = (props) => {
 					Avarage Duration: {averageSession}
 				</p>
 
-				<div id = "sessions">
+				<div id = "sessions" ref={(ref) => setScrollParentRef(ref)}>
 					<InfiniteScroll
 						pageStart = {0}
 						loadMore = {loadMore}
