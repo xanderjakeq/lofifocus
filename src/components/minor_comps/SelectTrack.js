@@ -33,16 +33,13 @@ const SelectTrackWrapper = styled.div`
 	background: #f0efed;
 
 	padding: 5px;
-	width: intrinsic;           /* Safari/WebKit uses a non-standard name */
-	width: -moz-max-content;    /* Firefox/Gecko */
-	width: -webkit-max-content; /* Chrome */
-	width: max-content;
 
 	border-radius: 5px;
 
 	z-index: 10;
 
 	.track {
+		width: max-content;
 		margin: 5px 0;
 		&:hover {
 			cursor: pointer;
