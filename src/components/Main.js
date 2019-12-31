@@ -119,7 +119,9 @@ const MainWrapper = styled.div`
     @media only screen and (max-width: ${breakpoint.b}) {
 
         width: 100%;
-        
+        #main {
+            height: 100vh;
+        }
         #aside {
             left: 0;
         }
