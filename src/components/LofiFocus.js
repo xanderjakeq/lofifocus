@@ -6,6 +6,7 @@ import { isEqual } from 'underscore';
 
 import { Player, LoadingScreen, FakeLink } from './index';
 import { getTracks, createSession, updateUser } from '../actions';
+import { breakpoint } from '../utils/styleConsts';
 
 const LofiFocus = (props) => {
 
@@ -152,6 +153,13 @@ const LofiFocusWrapper = styled.div`
 
 		&:hover { 
 			cursor: pointer;
+		}
+	}
+
+    @media only screen and (max-width: ${breakpoint.b}) {
+		width: 100%;
+		.volumeSliders {
+			width: 200px;
 		}
 	}
 `;

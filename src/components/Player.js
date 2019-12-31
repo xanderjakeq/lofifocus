@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ChevronDown } from 'react-feather';
 
 import { SelectTrack } from './index';
+import { breakpoint } from '../utils/styleConsts';
 
 const Player = (props) => { 
 
@@ -83,6 +84,10 @@ const InputRange = styled.input`
     
     /*required for proper track sizing in FF*/
     width: 300px;
+
+    @media only screen and (max-width: ${breakpoint.b}) {
+        width: 100%;
+    }
 }
 &::-webkit-slider-runnable-track {
     width: 300px;
@@ -90,6 +95,9 @@ const InputRange = styled.input`
     background: #ddd;
     border: none;
     // border-radius: 3px;
+    @media only screen and (max-width: ${breakpoint.b}) {
+        width: 100%;
+    }
 }
 &::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -116,6 +124,9 @@ const InputRange = styled.input`
     background: #ddd;
     border: none;
     // border-radius: 3px;
+    @media only screen and (max-width: ${breakpoint.b}) {
+        width: 100%;
+    }
 }
 &::-moz-range-thumb {
     border: none;
@@ -144,6 +155,9 @@ const InputRange = styled.input`
 
     /*remove default tick marks*/
     color: transparent;
+    @media only screen and (max-width: ${breakpoint.b}) {
+        width: 100%;
+    }
 }
 &::-ms-fill-lower {
     background: #777;

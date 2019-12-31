@@ -11,6 +11,16 @@ const Main = (props) => {
     const [isProfileVisible, setIsProfileVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
 
+    const toggleProfile = (e) => { 
+        e.preventDefault();
+        setIsProfileVisible(!isProfileVisible);
+    }
+
+    const toggleHelp = (e) => {
+        e.preventDefault();
+        setIsHelpVisible(!isHelpVisible);
+    }
+
     return (
         <Router>
             <MainWrapper>
@@ -19,8 +29,8 @@ const Main = (props) => {
                     <LofiFocus/>
                     
                     <nav id = "nav">
-                        <FakeLink text = "profile" onClick = {() => setIsProfileVisible(!isProfileVisible)} />
-                        <FakeLink text = "help" onClick = {() => setIsHelpVisible(!isHelpVisible)} />
+                        <FakeLink text = "profile" onClick = {toggleProfile} />
+                        <FakeLink text = "help" onClick = {toggleHelp} />
                     </nav>
                     {
                         isHelpVisible ?
@@ -34,7 +44,7 @@ const Main = (props) => {
                 <div id = "aside">
                 {
                     isProfileVisible ?
-                    <Profile/>
+                    <Profile close = {toggleProfile}/>
                     :
                     null
                 }
@@ -92,49 +102,26 @@ const MainWrapper = styled.div`
         right: 0;
     }
 
+
     @media only screen and (max-width: ${breakpoint.a}) {
-        display: unset;
-        width: 100%;
-        #nav {
-            // grid-area: none;
-            // position: fixed;
-            // bottom: 0;
-            // z-index: 10;
-
-            // div {
-            //     position: fixed;
-            //     top: unset;
-            //     bottom: 0;
-            //     left: 0;
-
-            //     padding: 0;
-            //     width: 100%;
-
-            //     flex-direction: row;
-            //     justify-content: space-evenly;
-
-            //     background: white;
-            //     border-top: 1px solid #d2d6d7;
-
-            //     a {
-            //         width: min-content;
-            //         span {
-            //             display: none;
-            //         }
-            //     }
-            // }
-
-            // .other-links {
-            //     display: none;
-            // }
-        }
         #main {
-            // grid-area: none;
-            // width: unset;
-            // margin-bottom: 50px;
+            
+            #help-image {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+            }
         }
+
+    }
+
+    @media only screen and (max-width: ${breakpoint.b}) {
+
+        width: 100%;
+        
         #aside {
-            grid-area: none;
+            left: 0;
         }
     }
 `;

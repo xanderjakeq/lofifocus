@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { ChevronLeft } from 'react-feather';
 
 import {  Session  } from './index';
 import { handleSignIn, handleSignOut, updateUser, getSessions } from '../actions';
@@ -12,7 +13,7 @@ const Profile = (props) => {
 
 	const { user, userSession, sessions, hasMore } = props;
 
-	const { handleSignIn, handleSignOut, getSessions, updateUser } = props;
+	const { handleSignIn, handleSignOut, getSessions, updateUser, close } = props;
 
 	let { username, averageSession, other } = user.attrs; 
 
@@ -37,6 +38,9 @@ const Profile = (props) => {
 	return username ? (
 		<ProfileWrapper>
 			<div id = "profile-wrapper">
+				<BackButton onClick = {close}>
+					<ChevronLeft size = {20}/>
+				</BackButton>
 				<button
 					onClick={ (e) => handleSignOut(e, userSession)}
 					className = "signout-button"
@@ -68,6 +72,9 @@ const Profile = (props) => {
 	)
 	:
 	<ProfileWrapper>
+		<BackButton onClick = {close}>
+			<ChevronLeft size = {20}/>
+		</BackButton>
 		<button
 			onClick={ (e) => handleSignIn(e, userSession)}
 			className = "signin-button"
@@ -96,6 +103,7 @@ const ProfileWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	position: relative;
 
 	width: 300px;
 	height: 100vh;
@@ -155,4 +163,14 @@ const ProfileWrapper = styled.div`
 	p {
 		margin: 10px;
 	}
+
+    @media only screen and (max-width: ${breakpoint.b}) {
+		width: 100%;
+	}
+`;
+
+const BackButton = styled.div`
+	position: absolute;
+	top: 10px;
+	left: 10px;
 `;
