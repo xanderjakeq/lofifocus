@@ -33,7 +33,7 @@ const SelectTrackWrapper = styled.div`
 	background: #f0efed;
 
 	padding: 5px;
-	width: max-content;
+	width: fit-content;
 
 	border-radius: 5px;
 
