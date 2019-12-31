@@ -103,10 +103,13 @@ const ProfileWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: relative;
+
+	position: absolute;
+	top: 0;
+	right: 0;
 
 	width: 300px;
-	height: 100vh;
+	height: 100%;
 
 	background: #f0efed;
 

@@ -21,9 +21,11 @@ const Main = (props) => {
         setIsHelpVisible(!isHelpVisible);
     }
 
+    const viewHieght = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
     return (
         <Router>
-            <MainWrapper>
+            <MainWrapper height = {viewHieght}>
                 <div id = "main">
                 
                     <LofiFocus/>
@@ -41,14 +43,12 @@ const Main = (props) => {
 
                 </div>
                     
-                <div id = "aside">
                 {
                     isProfileVisible ?
                     <Profile close = {toggleProfile}/>
                     :
                     null
                 }
-                </div>
             </MainWrapper>
         </Router>
     )
@@ -67,7 +67,7 @@ const MainWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
-    height: 100vh;
+    height: ${props => `${props.height}px`};
     
     font-family: 'Work Sans', sans-serif;
 
@@ -114,16 +114,5 @@ const MainWrapper = styled.div`
             }
         }
 
-    }
-
-    @media only screen and (max-width: ${breakpoint.b}) {
-
-        width: 100%;
-        #main {
-            height: 100vh;
-        }
-        #aside {
-            left: 0;
-        }
     }
 `;
