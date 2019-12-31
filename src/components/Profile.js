@@ -176,4 +176,7 @@ const BackButton = styled.div`
 	position: absolute;
 	top: 10px;
 	left: 10px;
+	&:hover { 
+		cursor: pointer;
+	}
 `;
