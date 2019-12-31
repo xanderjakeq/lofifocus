@@ -12,7 +12,7 @@ const branchTable = {
 		}
 
 		return { 
-			allSessions: [...action.payload, ...state.allSessions],
+			allSessions: [...state.allSessions, ...action.payload],
 			hasMore
 		}
 	},
