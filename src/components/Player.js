@@ -30,7 +30,7 @@ const Player = (props) => {
 	return (
 		<PlayerWrapper>
 			<audio ref = {elRef} loop = {loop}  >
-				<source src = { tracks[trackKeys[selectedTrack]].url } type="audio/wav"/>
+				<source src = { tracks[trackKeys[selectedTrack]].url } type="audio/mpeg"/>
 			</audio>
 			<div className = "title">
 				{tracks[trackKeys[selectedTrack]].title}
