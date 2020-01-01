@@ -94,7 +94,7 @@ const LofiFocus = (props) => {
 
 	return tracks ? ( 
 		<LofiFocusWrapper> 
-			<div onClick = {handlePlayPause} className = "playPauseButton" > 
+			<div onClick = {handlePlayPause} className = "playPauseButton" title = "Listen to original lofi music with some background noise, get work done."> 
 				{ isPlaying ? 
 					<Pause size = {50}/>
 					:
