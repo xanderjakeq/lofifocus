@@ -48,8 +48,12 @@ const Profile = (props) => {
 					sign out
 				</button>
 				<h2>Sessions</h2>
+				
 				<p>
 					Avarage Duration: {averageSession}
+				</p>
+				<p>
+					session ends when you pause the player
 				</p>
 
 				<div id = "sessions" ref={(ref) => setScrollParentRef(ref)}>
