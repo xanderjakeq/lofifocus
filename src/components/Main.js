@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { LofiFocus, FakeLink, Profile } from './index';
+import { LofiFocus, FakeLink, Profile, About } from './index';
 import { breakpoint } from '../utils/styleConsts';
 import help from '../imgs/lofifocus-help.png';
 
@@ -10,10 +10,16 @@ const Main = (props) => {
 
     const [isProfileVisible, setIsProfileVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
+    const [isAboutVisible, setIsAboutVisible] = useState(false);
 
     const toggleProfile = (e) => { 
         e.preventDefault();
         setIsProfileVisible(!isProfileVisible);
+    }
+
+    const toggleAbout = (e) => {
+        e.preventDefault();
+        setIsAboutVisible(!isAboutVisible);
     }
 
     const toggleHelp = (e) => {
@@ -32,6 +38,7 @@ const Main = (props) => {
                     
                     <nav id = "nav">
                         <FakeLink text = "profile" onClick = {toggleProfile} />
+                        <FakeLink text = "about" onClick = {toggleAbout} />
                         <FakeLink text = "help" onClick = {toggleHelp} />
                     </nav>
                     {
@@ -42,6 +49,13 @@ const Main = (props) => {
                     }
 
                 </div>
+
+                {
+                    isAboutVisible ?
+                    <About height = {viewHieght} close = {toggleAbout}/>
+                    :
+                    null
+                }
                     
                 {
                     isProfileVisible ?
