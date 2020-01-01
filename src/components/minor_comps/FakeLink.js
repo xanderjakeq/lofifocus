@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FakeLink = (props) => {
-	const { text, color } = props;
+	const { text, title, color } = props;
 	const { onClick } = props;
 
 	return (
-		<FakeLinkWrapper color = {color} onClick = {onClick}>
+		<FakeLinkWrapper color = {color} onClick = {onClick} title = {title}>
 			{text}
 		</FakeLinkWrapper>
 	)
