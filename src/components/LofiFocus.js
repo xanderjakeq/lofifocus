@@ -80,11 +80,8 @@ const LofiFocus = (props) => {
 			noiseRef.current.play();
 			lofiRef.current.play();
 
-			if (updatedPreferences) {
-				const { noiseVolume, lofiVolume } = updatedPreferences;
-				noiseRef.current.volume = noiseVolume;
-				lofiRef.current.volume = lofiVolume;
-			}
+			noiseRef.current.volume = noiseVolume;
+			lofiRef.current.volume = lofiVolume;
 			
 			setStartSession(Date.now());
 		} else {
