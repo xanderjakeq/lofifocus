@@ -39,7 +39,7 @@ const About = (props) => {
 					</p>
 
 					<p>
-						Made with <span role = "img" aria-label = "tea">☕</span> by <a href = "https://xanderjakeq.page/" target = "_blank" rel = "noopener noreferrer">xanderjakeq</a>
+						Made with <span role = "img" aria-label = "tea">☕</span> by <a href = "https://xanderjakeq.page/" target = "_blank" rel = "noopener noreferrer">xanderjakeq</a> and <a href = "https://www.instagram.com/xajemusic/" target = "_blank" rel = "noopener noreferrer">xaje</a>
 					</p>
 
 				</div>
@@ -68,7 +68,6 @@ const AboutWrapper = styled.div`
 
 	p {
 		margin: 10px 0;
-		max-width: 300px;
 	}
 
 	ul {
