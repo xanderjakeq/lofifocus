@@ -12,7 +12,7 @@ const LofiFocus = (props) => {
 
 	const { tracks, user } = props;
 
-	const { getTracks, createSession, updateUser } = props;
+	const { getTracks, createSession, updateUser, toggleProfile } = props;
 
 	const { license, username, averageSession, preferences } = user.attrs;
 
@@ -142,8 +142,8 @@ const LofiFocus = (props) => {
 						loop
 				/>
 				{
-					!isEqual(preferences, updatedPreferences) && username ? 
-					<FakeLink text = "save preferences" color = "red" onClick = {savePreferences} />
+					!isEqual(preferences, updatedPreferences) ? 
+					<FakeLink text = "save preferences" color = "red" onClick = {username ? savePreferences : toggleProfile} />
 					:
 					null
 				}

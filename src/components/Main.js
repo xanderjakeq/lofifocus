@@ -34,7 +34,7 @@ const Main = (props) => {
             <MainWrapper height = {viewHieght}>
                 <div id = "main">
                 
-                    <LofiFocus/>
+                    <LofiFocus toggleProfile = {toggleProfile}/>
                     
                     <nav id = "nav">
                         <FakeLink text = "profile" onClick = {toggleProfile} />

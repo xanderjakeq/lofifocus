@@ -30,7 +30,8 @@ const About = (props) => {
 					<ul>
 						<li>lofi music</li>
 						<li>background noise</li>
-						<li>session logging</li>
+						<li>save preferences</li>
+						<li>log sessions</li>
 					</ul>
 
 					<p>
