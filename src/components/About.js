@@ -35,7 +35,7 @@ const About = (props) => {
 					</ul>
 
 					<p>
-						more tracks soon
+						new music every two weeks
 					</p>
 
 					<p>
