@@ -60,6 +60,13 @@ const LofiFocus = (props) => {
 		});
 	}
 
+	const handleTrackChange = (name, track) => {
+		setUpdatedPreferences({
+			...updatedPreferences,
+			[`${name}Selected`]: track
+		});
+	}
+
 	const getDuration = () => {
 		const durationMillis = Date.now() - startSession;
 		const durationMinutes = Math.floor(durationMillis/60000);
@@ -113,21 +120,25 @@ const LofiFocus = (props) => {
 				<Player name = "lofi" 
 						elRef = {lofiRef} 
 						tracks = { tracks.lofiTracks }
+						preferences = {updatedPreferences}
 						min = "0"
 						max = "1"
 						step = ".01"
 						volume = { lofiVolume } 
 						handleVolume = {e => handleVolume(e, setLofiVolume) }
+						handleTrackChange = {handleTrackChange}
 						loop
 				/>
 				<Player name = "noise" 
 						elRef = {noiseRef} 
 						tracks = { tracks.noiseTracks } 
+						preferences = {updatedPreferences}
 						min = "0"
 						max = "1"
 						step = ".01"
 						volume = { noiseVolume } 
 						handleVolume = {e => handleVolume(e, setNoiseVolume) }
+						handleTrackChange = {handleTrackChange}
 						loop
 				/>
 				{

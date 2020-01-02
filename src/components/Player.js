@@ -6,12 +6,11 @@ import { SelectTrack } from './index';
 import { breakpoint } from '../utils/styleConsts';
 
 const Player = (props) => { 
+	const { name, elRef, tracks = {}, preferences = {}, min, max, volume, step, loop } = props;
+    const { handleVolume, handleTrackChange } = props;
 
-    const [selectedTrack, setSelectedTrack] = useState(0);
+    const [selectedTrack, setSelectedTrack] = useState(preferences[`${name}Selected`] || 0);
     const [isSelecting, setIsSelecting] = useState(false);
-
-	const { name, elRef, tracks = {}, min, max, volume, step, loop } = props;
-    const { handleVolume } = props;
     
     const trackKeys = Object.keys(tracks);
 
@@ -26,6 +25,8 @@ const Player = (props) => {
         if (!isPaused) {
             elRef.current.play();
         }
+
+        handleTrackChange(name, idx);
     }
     
 	return (
