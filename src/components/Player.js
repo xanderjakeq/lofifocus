@@ -10,7 +10,7 @@ const Player = (props) => {
     const [selectedTrack, setSelectedTrack] = useState(0);
     const [isSelecting, setIsSelecting] = useState(false);
 
-	const { name, elRef, tracks = {}, volume, loop } = props;
+	const { name, elRef, tracks = {}, min, max, volume, step, loop } = props;
     const { handleVolume } = props;
     
     const trackKeys = Object.keys(tracks);
@@ -30,7 +30,7 @@ const Player = (props) => {
     
 	return (
 		<PlayerWrapper>
-			<audio ref = {elRef} loop = {loop}  >
+			<audio ref = {elRef} loop = {loop} >
 				<source src = { tracks[trackKeys[selectedTrack]].url } type="audio/mpeg"/>
 			</audio>
 			<div className = "title">
@@ -45,7 +45,7 @@ const Player = (props) => {
                     }
                 </div>
 			</div>
-			<InputRange name = {name} type = "range" value = {volume} onChange = {handleVolume}/>
+			<InputRange name = {name} type = "range" min = {min} max = {max} step = {step} value = {volume} onChange = {handleVolume}/>
 		</PlayerWrapper>
 	)
 }

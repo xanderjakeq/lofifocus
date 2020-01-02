@@ -20,8 +20,8 @@ const LofiFocus = (props) => {
 	const [updatedPreferences, setUpdatedPreferences] = useState(preferences);
 
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [noiseVolume, setNoiseVolume] = useState(updatedPreferences ? updatedPreferences.noiseVolume : 50);
-	const [lofiVolume, setLofiVolume] = useState(updatedPreferences ? updatedPreferences.lofiVolume : 50);
+	const [noiseVolume, setNoiseVolume] = useState(updatedPreferences ? updatedPreferences.noiseVolume : .50);
+	const [lofiVolume, setLofiVolume] = useState(updatedPreferences ? updatedPreferences.lofiVolume : .50);
 
 	const noiseRef = useRef(null);
 	const lofiRef = useRef(null);
@@ -37,10 +37,11 @@ const LofiFocus = (props) => {
 
 	useEffect(() => { 
 		const newPreferences = user.attrs.preferences;
+		const { noiseVolume, lofiVolume } = newPreferences || {};
 		if (newPreferences) {
 			setUpdatedPreferences(newPreferences);
-			setNoiseVolume(newPreferences.noiseVolume ? newPreferences.noiseVolume * 100 : 50);
-			setLofiVolume(newPreferences.lofiVolume ? newPreferences.lofiVolume * 100 : 50);
+			setNoiseVolume(noiseVolume ? noiseVolume : .5);
+			setLofiVolume(lofiVolume ? lofiVolume : .5);
 		}
 	}, [user]);
 
@@ -48,7 +49,7 @@ const LofiFocus = (props) => {
 		const value = e.target.value;
 		const name = e.target.name;
 		
-		const volume = value/100;
+		const volume = value;
 
 		cb(value);
 		nameToRef[name].current.volume = volume;
@@ -56,7 +57,7 @@ const LofiFocus = (props) => {
 		setUpdatedPreferences({
 			...updatedPreferences,
 			[`${name}Volume`]: volume
-		})
+		});
 	}
 
 	const getDuration = () => {
@@ -71,6 +72,13 @@ const LofiFocus = (props) => {
 		if (!isPlaying) { 
 			noiseRef.current.play();
 			lofiRef.current.play();
+
+			if (updatedPreferences) {
+				const { noiseVolume, lofiVolume } = updatedPreferences;
+				noiseRef.current.volume = noiseVolume;
+				lofiRef.current.volume = lofiVolume;
+			}
+			
 			setStartSession(Date.now());
 		} else {
 			noiseRef.current.pause();
@@ -105,6 +113,9 @@ const LofiFocus = (props) => {
 				<Player name = "lofi" 
 						elRef = {lofiRef} 
 						tracks = { tracks.lofiTracks }
+						min = "0"
+						max = "1"
+						step = ".01"
 						volume = { lofiVolume } 
 						handleVolume = {e => handleVolume(e, setLofiVolume) }
 						loop
@@ -112,6 +123,9 @@ const LofiFocus = (props) => {
 				<Player name = "noise" 
 						elRef = {noiseRef} 
 						tracks = { tracks.noiseTracks } 
+						min = "0"
+						max = "1"
+						step = ".01"
 						volume = { noiseVolume } 
 						handleVolume = {e => handleVolume(e, setNoiseVolume) }
 						loop
