@@ -12,7 +12,7 @@ const db = firebase.database();
 const noiseRef = db.ref(audioTypes.noise);
 const lofiRef = db.ref(audioTypes.lofi);
 
-var whitelist = ['https://strtrf.firebaseapp.com', 'http://localhost:3000', 'https://lofifocus.io']
+var whitelist = ['https://strtrf.firebaseapp.com', 'http://localhost:3000', 'https://lofifocus.io', 'http://127.0.0.1:3000']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
