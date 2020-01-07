@@ -48,7 +48,7 @@ const Main = (props) => {
                         <FakeLink text = "help" onClick = {toggleHelp} />
                     </nav>
                     <div id = "share-btns">
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Listen to #lofi music and get productive " data-related="xanderjakeq,xajemusic" data-show-count="false" alt="tweet">tweet</a>
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Listen to #lofi music and get productive with LofiFocus. " data-related="xanderjakeq,xajemusic" data-show-count="false" alt="tweet">tweet</a>
                     </div>
                     {
                         isHelpVisible ?
