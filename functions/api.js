@@ -26,6 +26,7 @@ var corsOptions = {
 app.get('/noisetracks', cors(corsOptions), async (req, res) => {
   const isMember = req.query.isMember === 'true';
 
+  res.set(`can't-be-evil`, true);
   if (isMember) { 
     noiseRef.once('value', snap => { 
       res.json(snap.val());
@@ -40,6 +41,7 @@ app.get('/noisetracks', cors(corsOptions), async (req, res) => {
 app.get('/lofitracks', cors(corsOptions), (req, res) => {
 	const isMember = req.query.isMember === 'true';
 
+  res.set(`can't-be-evil`, true);
   if (isMember) { 
     lofiRef.once('value', snap => { 
       res.json(snap.val());
