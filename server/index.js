@@ -1,8 +1,22 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { setup } = require('radiks-server');
 
+var whitelist = ['http://localhost:3000', 'https://lofifocus.io', 'http://127.0.0.1:3000']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 const app = express();
+
+app.use(cors(corsOptions));
 
 setup({
     mongoDBUrl: process.env.MONGO_DB_URL
