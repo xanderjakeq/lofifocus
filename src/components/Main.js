@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,12 +11,6 @@ const Main = (props) => {
     const [isProfileVisible, setIsProfileVisible] = useState(false);
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [isAboutVisible, setIsAboutVisible] = useState(false);
-
-    useEffect(() => { 
-        const script = document.createElement("script");
-        script.src = "https://platform.twitter.com/widgets.js";
-        document.body.appendChild(script);
-    },[])
 
     const toggleProfile = (e) => { 
         e.preventDefault();
@@ -47,9 +41,6 @@ const Main = (props) => {
                         <FakeLink text = "about" onClick = {toggleAbout} />
                         <FakeLink text = "help" onClick = {toggleHelp} />
                     </nav>
-                    <div id = "share-btns">
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Listen to #lofi music and get productive with LofiFocus. " data-related="xanderjakeq,xajemusic" data-show-count="false" alt="tweet">tweet</a>
-                    </div>
                     {
                         isHelpVisible ?
                         <img src = {help} alt = "Help" id = "help-image"/>
