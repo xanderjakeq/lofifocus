@@ -18,6 +18,11 @@ const app = express();
 
 app.use(cors(corsOptions));
 
+app.use(function(req, res, next) {
+    res.setHeader(`can't-be-evil`, true);
+    next();
+});
+
 setup({
     mongoDBUrl: process.env.MONGO_DB_URL
 }).then(RadiksController => {
