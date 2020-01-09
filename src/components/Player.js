@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { ChevronDown } from 'react-feather';
 
 import { SelectTrack } from './index';
+import { getTrackFile } from '../actions';
 import { breakpoint } from '../utils/styleConsts';
 
 const Player = (props) => { 
 	const { name, elRef, tracks = {}, preferences = {}, min, max, volume, step, loop } = props;
-    const { handleVolume, handleTrackChange } = props;
+    const { handleVolume, handleTrackChange, getTrackFile } = props;
 
     const [selectedTrack, setSelectedTrack] = useState(preferences[`${name}Selected`] || 0);
     const [isSelecting, setIsSelecting] = useState(false);
+    const [url, setUrl] = useState();
     
     const trackKeys = Object.keys(tracks);
 
-    const selectTrack = (idx) => {
-        setSelectedTrack(idx);
-        setIsSelecting(false);
-
+    const handleFile = (res) => {
+        setUrl(res)
         const audio = elRef.current;
         const isPaused = audio.paused;
         audio.pause();
@@ -25,6 +26,18 @@ const Player = (props) => {
         if (!isPaused) {
             elRef.current.play();
         }
+    }
+
+    useEffect (() => {
+        const trackType = name;
+        const trackName = tracks[trackKeys[selectedTrack]].url.split("/")[7].split('?')[0].replace("%2F", "/");
+        getTrackFile(trackType, trackName).then(handleFile)
+
+    }, [selectedTrack]);
+
+    const selectTrack = (idx) => {
+        setSelectedTrack(idx);
+        setIsSelecting(false);
 
         handleTrackChange(name, idx);
     }
@@ -32,7 +45,7 @@ const Player = (props) => {
 	return (
 		<PlayerWrapper>
 			<audio ref = {elRef} loop = {loop} >
-				<source src = { tracks[trackKeys[selectedTrack]].url } type="audio/mpeg"/>
+				<source src = { url } type="audio/mpeg"/>
 			</audio>
 			<div className = "title">
 				{tracks[trackKeys[selectedTrack]].title}
@@ -51,7 +64,13 @@ const Player = (props) => {
 	)
 }
 
-export default Player;
+const mstp = (state) => {
+    return {
+
+    }
+}
+
+export default connect(mstp, {getTrackFile})(Player);
 
 const PlayerWrapper = styled.div`
     margin: 10px 0;

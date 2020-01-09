@@ -140,6 +140,34 @@
     through2 "^3.0.0"
     xdg-basedir "^4.0.0"
 
+"@google-cloud/storage@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@google-cloud/storage/-/storage-4.2.0.tgz#f03a49d4556f08ec000bb9386e12c636f66e783d"
+  integrity sha512-KksntL3RCXShVaUkdxGzFUHvoGylMkOyl33bKe4skyu7NqpM4cQNuiDLg3mE5UOsK87J3p/j2z/TFH/BlzLzHA==
+  dependencies:
+    "@google-cloud/common" "^2.1.1"
+    "@google-cloud/paginator" "^2.0.0"
+    "@google-cloud/promisify" "^1.0.0"
+    arrify "^2.0.0"
+    compressible "^2.0.12"
+    concat-stream "^2.0.0"
+    date-and-time "^0.11.0"
+    duplexify "^3.5.0"
+    extend "^3.0.2"
+    gaxios "^2.0.1"
+    gcs-resumable-upload "^2.2.4"
+    hash-stream-validation "^0.2.2"
+    mime "^2.2.0"
+    mime-types "^2.0.8"
+    onetime "^5.1.0"
+    p-limit "^2.2.0"
+    pumpify "^2.0.0"
+    readable-stream "^3.4.0"
+    snakeize "^0.1.0"
+    stream-events "^1.0.1"
+    through2 "^3.0.0"
+    xdg-basedir "^4.0.0"
+
 "@grpc/grpc-js@^0.6.12":
   version "0.6.15"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-0.6.15.tgz#534d1051ddced4e5e5849212789dd64014214dd4"

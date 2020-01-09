@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const firebase = require('./firebaseConfig');
+const bucket = require('./storageConfig');
 const { audioTypes } = require('./constants');
 
 const app = express();
@@ -51,6 +52,21 @@ app.get('/lofitracks', cors(corsOptions), (req, res) => {
       res.json(snap.val());
     });
   }
+});
+
+app.get('/track/:type/:name', cors(corsOptions), async (req, res) => { 
+
+  const { type, name } = req.params;
+
+  const file = await bucket.file(`${type}/${name}`);
+
+  res.set(`can't-be-evil`, true);
+
+  const readStream = file.createReadStream();
+  readStream.on('end', () => {
+    res.end();
+  }).pipe(res);
+
 });
 
 module.exports = app;
