@@ -13,7 +13,7 @@ const db = firebase.database();
 const noiseRef = db.ref(audioTypes.noise);
 const lofiRef = db.ref(audioTypes.lofi);
 
-var whitelist = ['https://strtrf.firebaseapp.com', 'http://localhost:3000', 'https://lofifocus.io', 'http://127.0.0.1:3000']
+var whitelist = ['https://strtrf.firebaseapp.com', 'http://localhost:3000', 'https://lofifocus.io', 'http://127.0.0.1:3000'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -24,7 +24,10 @@ var corsOptions = {
   }
 }
 
-app.get('/noisetracks', cors(corsOptions), async (req, res) => {
+
+app.use(cors(corsOptions));
+
+app.get('/noisetracks', async (req, res) => {
   const isMember = req.query.isMember === 'true';
 
   res.set(`can't-be-evil`, true);
@@ -39,7 +42,7 @@ app.get('/noisetracks', cors(corsOptions), async (req, res) => {
   }
 });
 
-app.get('/lofitracks', cors(corsOptions), (req, res) => {
+app.get('/lofitracks', (req, res) => {
 	const isMember = req.query.isMember === 'true';
 
   res.set(`can't-be-evil`, true);
@@ -54,7 +57,7 @@ app.get('/lofitracks', cors(corsOptions), (req, res) => {
   }
 });
 
-app.get('/track/:type/:name', cors(corsOptions), async (req, res) => { 
+app.get('/track/:type/:name', async (req, res) => { 
 
   const { type, name } = req.params;
 
