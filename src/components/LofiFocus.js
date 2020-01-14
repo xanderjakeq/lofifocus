@@ -5,16 +5,16 @@ import { Play, Pause } from 'react-feather';
 import { isEqual } from 'underscore';
 
 import { Player, LoadingScreen, FakeLink } from './index';
-import { getTracks, createSession, updateUser } from '../actions';
+import { getTracks, createSession, countSessions, updateUser } from '../actions';
 import { breakpoint } from '../utils/styleConsts';
 
 const LofiFocus = (props) => {
 
-	const { tracks, user } = props;
+	const { tracks, user, sessionCount } = props;
 
-	const { getTracks, createSession, updateUser, toggleProfile } = props;
+	const { getTracks, createSession, countSessions, updateUser, toggleProfile } = props;
 
-	const { license, username, averageSession, preferences } = user.attrs;
+	const { license, username, averageSession, preferences, signingKeyId } = user.attrs;
 
 	const [startSession, setStartSession] = useState(Date.now());
 	const [updatedPreferences, setUpdatedPreferences] = useState(preferences);
@@ -42,6 +42,12 @@ const LofiFocus = (props) => {
 			setUpdatedPreferences(newPreferences);
 			setNoiseVolume(noiseVolume ? noiseVolume : .5);
 			setLofiVolume(lofiVolume ? lofiVolume : .5);
+		}
+	}, [user]);
+
+	useEffect (() => {
+		if (username) {
+			countSessions(signingKeyId);
 		}
 	}, [user]);
 
@@ -74,6 +80,10 @@ const LofiFocus = (props) => {
 		return durationMinutes;
 	}
 
+	const average = (sessionDuration, currentAverage, totalSessions) => {
+		return ((sessionDuration + totalSessions * currentAverage)/(totalSessions + 1)).toFixed(2);
+	}
+
 	const handlePlayPause = (e) => { 
 		e.stopPropagation();
 		if (!isPlaying) { 
@@ -87,10 +97,11 @@ const LofiFocus = (props) => {
 		} else {
 			noiseRef.current.pause();
 			lofiRef.current.pause();
+			
 			if (username) {
 				const sessionDuration = getDuration();
 				updateUser(user, {
-					averageSession: averageSession > 0 ? ((sessionDuration + averageSession) / 2).toFixed(2) : sessionDuration
+					averageSession: averageSession > 0 ? average(sessionDuration, averageSession, sessionCount) : sessionDuration
 				});
 				createSession(startSession, getDuration());
 			}
@@ -154,11 +165,12 @@ const LofiFocus = (props) => {
 const mstp = (state) => { 
 	return { 
 		user: state.auth.User,
-		tracks: state.tracks.allTracks
+		tracks: state.tracks.allTracks,
+		sessionCount: state.sessions.count
 	}
 }
 
-export default connect(mstp, {getTracks, createSession, updateUser})(LofiFocus);
+export default connect(mstp, {getTracks, createSession, countSessions, updateUser})(LofiFocus);
 
 const LofiFocusWrapper = styled.div`
 	display: flex;
