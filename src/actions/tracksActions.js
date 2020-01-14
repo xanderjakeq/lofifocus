@@ -8,8 +8,8 @@ export const TRACKS_RECEIVED = 'TRACKS_RECEIVED';
 export const GETTING_TRACK = 'GETTING_TRACK';
 export const TRACK_RECEIVED = 'TRACK_RECEIVED';
 
-// const api = 'https://us-central1-lofifocus.cloudfunctions.net/api';
-const api = 'http://localhost:5001/lofifocus/us-central1/api';
+const api = 'https://us-central1-lofifocus.cloudfunctions.net/api';
+// const api = 'http://localhost:5001/lofifocus/us-central1/api';
 
 export const getTracks = (license) => async (dispatch) => { 
 	dispatch({ 
