@@ -2,6 +2,7 @@ import * as actions from '../actions';
 
 const initialState = { 
 	allSessions: [],
+	count: 0,
 }
 
 const branchTable = { 
@@ -11,14 +12,23 @@ const branchTable = {
 			hasMore = false;
 		}
 
-		return { 
+		return {
+			...state, 
 			allSessions: [...state.allSessions, ...action.payload],
 			hasMore
 		}
 	},
 	[actions.SESSION_CREATED]: (state, action) => { 
 		return { 
-			allSessions: [action.payload, ...state.allSessions]
+			...state,
+			allSessions: [action.payload, ...state.allSessions],
+			count: state.count + 1
+		}
+	},
+	[actions.SESSIONS_COUNTED]: (state, action) => { 
+		return { 
+			...state,
+			count: action.payload
 		}
 	},
 }
