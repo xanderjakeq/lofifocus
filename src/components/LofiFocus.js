@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Play, Pause } from 'react-feather';
-import { isEqual } from 'underscore';
+import { isEqual, isEmpty } from 'underscore';
 
 import { Player, LoadingScreen, FakeLink } from './index';
 import { getTracks, createSession, countSessions, updateUser } from '../actions';
@@ -14,7 +14,7 @@ const LofiFocus = (props) => {
 
 	const { getTracks, createSession, countSessions, updateUser, toggleProfile } = props;
 
-	const { license, username, averageSession, preferences, signingKeyId } = user.attrs;
+	const { license, username, playlist, averageSession, preferences, signingKeyId } = user.attrs;
 
 	const [startSession, setStartSession] = useState(Date.now());
 	const [updatedPreferences, setUpdatedPreferences] = useState(preferences);
@@ -69,7 +69,7 @@ const LofiFocus = (props) => {
 	const handleTrackChange = (name, track) => {
 		setUpdatedPreferences({
 			...updatedPreferences,
-			[`${name}Selected`]: track
+			// [`${name}Selected`]: track
 		});
 	}
 
@@ -126,28 +126,29 @@ const LofiFocus = (props) => {
 			</div>
 			<div className = "volumeSliders">
 				<Player name = "lofi" 
-						elRef = {lofiRef} 
-						tracks = { tracks.lofiTracks }
-						preferences = {updatedPreferences}
-						min = "0"
-						max = "1"
-						step = ".01"
-						volume = { lofiVolume } 
-						handleVolume = {e => handleVolume(e, setLofiVolume) }
-						handleTrackChange = {handleTrackChange}
-						loop
+					isPlaying = {isPlaying}
+					elRef = {lofiRef} 
+					tracks = { isEmpty(playlist) ? tracks.lofiTracks : playlist }
+					preferences = {updatedPreferences}
+					min = "0"
+					max = "1"
+					step = ".01"
+					volume = { lofiVolume } 
+					handleVolume = {e => handleVolume(e, setLofiVolume) }
+					handleTrackChange = {handleTrackChange}
 				/>
 				<Player name = "noise" 
-						elRef = {noiseRef} 
-						tracks = { tracks.noiseTracks } 
-						preferences = {updatedPreferences}
-						min = "0"
-						max = "1"
-						step = ".01"
-						volume = { noiseVolume } 
-						handleVolume = {e => handleVolume(e, setNoiseVolume) }
-						handleTrackChange = {handleTrackChange}
-						loop
+					isPlaying = {isPlaying}
+					elRef = {noiseRef} 
+					tracks = { tracks.noiseTracks } 
+					preferences = {updatedPreferences}
+					min = "0"
+					max = "1"
+					step = ".01"
+					volume = { noiseVolume } 
+					handleVolume = {e => handleVolume(e, setNoiseVolume) }
+					handleTrackChange = {handleTrackChange}
+					loop
 				/>
 				{
 					!isEqual(preferences, updatedPreferences) ? 

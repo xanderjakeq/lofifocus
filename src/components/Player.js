@@ -8,7 +8,7 @@ import { getTrackFile } from '../actions';
 import { breakpoint } from '../utils/styleConsts';
 
 const Player = (props) => { 
-	const { name, elRef, tracks = {}, preferences = {}, min, max, volume, step, loop } = props;
+	const { name, elRef, isPlaying, tracks = {}, preferences = {}, min, max, volume, step, loop = false } = props;
     const { handleVolume, handleTrackChange, getTrackFile } = props;
 
     const [selectedTrack, setSelectedTrack] = useState(preferences[`${name}Selected`] || 0);
@@ -20,10 +20,9 @@ const Player = (props) => {
     const handleFile = (res) => {
         setUrl(res)
         const audio = elRef.current;
-        const isPaused = audio.paused;
         audio.pause();
         audio.load();
-        if (!isPaused) {
+        if (isPlaying) {
             elRef.current.play();
         }
     }
@@ -41,10 +40,21 @@ const Player = (props) => {
 
         handleTrackChange(name, idx);
     }
+
+    const handleEnd = () => {
+        if (!loop) {
+            if (selectedTrack - 1 < trackKeys.length) {
+                const increment = selectedTrack + 1;
+                selectTrack(increment)
+            } else {
+                selectTrack(0)
+            }
+        }
+    }
     
 	return (
 		<PlayerWrapper>
-			<audio ref = {elRef} loop = {loop} >
+			<audio ref = {elRef} loop = {loop} onEnded = {handleEnd}>
 				<source src = { url } type="audio/mpeg"/>
 			</audio>
 			<div className = "title">

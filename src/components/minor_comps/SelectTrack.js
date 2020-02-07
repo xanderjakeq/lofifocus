@@ -31,12 +31,12 @@ const SelectTrackWrapper = styled.div`
 	left: -25px;
 
 	background: #f0efed;
-
 	padding: 5px;
-
 	border-radius: 5px;
-
 	z-index: 10;
+
+	max-height: 200px;
+    overflow-y: auto;
 
 	.track {
 		width: max-content;

@@ -56,6 +56,9 @@ export class User extends Model {
         preferences: {
             type: Object
         },
+        playlist: {
+            type: Object
+        },
         other: {
             type: Object,
             decrypted: true
@@ -64,6 +67,7 @@ export class User extends Model {
 
     static defaults = {
         averageSession: 0,
+        playlist: {},
         preferences: {},
         other: {}
     }
