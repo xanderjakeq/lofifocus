@@ -11,7 +11,7 @@ const Browser = (props) => {
 	const { user, tracks, height } = props;
 	const { close, updateUser, getTrackFile } = props;
 
-	const { playlist } = user.attrs;
+	const { playlist, username } = user.attrs;
 
 	const [trackType, setTrackType] = useState(0);
 	const [trackKeys, setTrackKeys] = useState(Object.keys(tracks.lofiTracks));
@@ -75,7 +75,7 @@ const Browser = (props) => {
 
 	}
 
-	return (
+	return ( username ?
 		<BrowserWrapper height = {height}>
 			
 			<div id = "container">
@@ -115,6 +115,30 @@ const Browser = (props) => {
 					
 				</div>
 			</div>
+		</BrowserWrapper>
+		:
+		<BrowserWrapper height = {height}>
+			<div id = "container">
+
+				<BackButton onClick = {close}>
+					<ChevronLeft size = {20}/>
+				</BackButton>
+
+				<div id = "sub-container">
+
+					<h1>Sign In to use browser</h1>
+
+					<audio ref = {audioRef} autoPlay controlsList = "nodownload">
+						<source src = { url } type="audio/mpeg"/>
+					</audio>
+
+					<ul id = "tracks-list">
+						
+					</ul>
+					
+				</div>
+			</div>
+
 		</BrowserWrapper>
 	)
 }

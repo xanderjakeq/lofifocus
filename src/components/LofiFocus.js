@@ -128,7 +128,7 @@ const LofiFocus = (props) => {
 				<Player name = "lofi" 
 					isPlaying = {isPlaying}
 					elRef = {lofiRef} 
-					tracks = { isEmpty(playlist) ? tracks.lofiTracks : playlist }
+					tracks = { isEmpty(playlist) ? tracks.lofiTracks : {...playlist} }
 					preferences = {updatedPreferences}
 					min = "0"
 					max = "1"

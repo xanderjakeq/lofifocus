@@ -15,7 +15,8 @@ const Player = (props) => {
     const [isSelecting, setIsSelecting] = useState(false);
     const [url, setUrl] = useState();
     
-    const trackKeys = Object.keys(tracks);
+    // const trackKeys = Object.keys(tracks);
+    const [trackKeys, setTrackKeys] = useState(Object.keys(tracks));
 
     const handleFile = (res) => {
         setUrl(res)
@@ -34,6 +35,15 @@ const Player = (props) => {
 
     }, [selectedTrack]);
 
+    useEffect (() => {
+        const newTrackKeys = Object.keys(tracks);
+        setTrackKeys(newTrackKeys)
+
+        if (!newTrackKeys[selectedTrack]) {
+            selectTrack(0);
+        }
+    }, [tracks]);
+
     const selectTrack = (idx) => {
         setSelectedTrack(idx);
         setIsSelecting(false);
@@ -43,8 +53,8 @@ const Player = (props) => {
 
     const handleEnd = () => {
         if (!loop) {
-            if (selectedTrack - 1 < trackKeys.length) {
-                const increment = selectedTrack + 1;
+            const increment = selectedTrack + 1;
+            if (increment < trackKeys.length) {
                 selectTrack(increment)
             } else {
                 selectTrack(0)
@@ -58,7 +68,7 @@ const Player = (props) => {
 				<source src = { url } type="audio/mpeg"/>
 			</audio>
 			<div className = "title">
-				{tracks[trackKeys[selectedTrack]].title}
+				{tracks[trackKeys[selectedTrack]] ? tracks[trackKeys[selectedTrack]].title : null}
                 <div className = "select">
                     <ChevronDown size = {15} onClick={() => setIsSelecting(!isSelecting)} />
                     {
