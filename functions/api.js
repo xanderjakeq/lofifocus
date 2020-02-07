@@ -36,7 +36,7 @@ app.get('/noisetracks', async (req, res) => {
       res.json(snap.val());
     });
   } else { 
-    noiseRef.limitToFirst(3).once('value', snap => { 
+    noiseRef.limitToFirst(10).once('value', snap => { 
       res.json(snap.val());
     });
   }
@@ -51,7 +51,7 @@ app.get('/lofitracks', (req, res) => {
       res.json(snap.val());
     });
   } else { 
-    lofiRef.limitToFirst(7).once('value', snap => { 
+    lofiRef.limitToFirst(10).once('value', snap => { 
       res.json(snap.val());
     });
   }
