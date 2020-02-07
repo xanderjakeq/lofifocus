@@ -51,7 +51,7 @@ app.get('/lofitracks', (req, res) => {
       res.json(snap.val());
     });
   } else { 
-    lofiRef.limitToFirst(3).once('value', snap => { 
+    lofiRef.limitToFirst(7).once('value', snap => { 
       res.json(snap.val());
     });
   }
