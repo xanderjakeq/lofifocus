@@ -70,6 +70,7 @@ const LofiFocus = (props) => {
 		setUpdatedPreferences({
 			...updatedPreferences,
 			// [`${name}Selected`]: track
+			"noiseSelected": track
 		});
 	}
 
