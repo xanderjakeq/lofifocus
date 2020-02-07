@@ -39,7 +39,7 @@ const About = (props) => {
 					</p>
 
 					<p>
-						Made with <span role = "img" aria-label = "tea">☕</span> by <a href = "https://xanderjakeq.page/" target = "_blank" rel = "noopener noreferrer">xanderjakeq</a> and <a href = "https://www.instagram.com/xajemusic/" target = "_blank" rel = "noopener noreferrer">xaje</a>
+						Made with <span role = "img" aria-label = "tea">☕</span> by <a href = "https://www.patreon.com/xanderjakeq" target = "_blank" rel = "noopener noreferrer">xanderjakeq</a> and <a href = "https://www.instagram.com/xajemusic/" target = "_blank" rel = "noopener noreferrer">xaje</a>
 					</p>
 
 				</div>
