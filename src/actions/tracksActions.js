@@ -86,7 +86,10 @@ export const getTrackFile = (type, name) => async (dispatch) => {
 
 	dispatch({
 		type: TRACK_RECEIVED,
-		payload: url
+		payload: { 
+			type,
+			url,
+		}
 	});
 
 	return url;

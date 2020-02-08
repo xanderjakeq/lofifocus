@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Play, Pause } from 'react-feather';
+import { Circle, Play, Pause } from 'react-feather';
 import { isEqual, isEmpty } from 'underscore';
 
 import { Player, LoadingScreen, FakeLink } from './index';
@@ -10,7 +10,7 @@ import { breakpoint } from '../utils/styleConsts';
 
 const LofiFocus = (props) => {
 
-	const { tracks, user, sessionCount } = props;
+	const { tracks, currentTracks, user, sessionCount } = props;
 
 	const { getTracks, createSession, countSessions, updateUser, toggleProfile } = props;
 
@@ -19,6 +19,7 @@ const LofiFocus = (props) => {
 	const [startSession, setStartSession] = useState(Date.now());
 	const [updatedPreferences, setUpdatedPreferences] = useState(preferences);
 
+	const [isReady, setIsReady] = useState(currentTracks.lofi && currentTracks.noise);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noiseVolume, setNoiseVolume] = useState(updatedPreferences ? updatedPreferences.noiseVolume : .50);
 	const [lofiVolume, setLofiVolume] = useState(updatedPreferences ? updatedPreferences.lofiVolume : .50);
@@ -34,6 +35,10 @@ const LofiFocus = (props) => {
 	useEffect (() => { 
 		getTracks(license);
 	}, []);
+
+	useEffect (() => {
+		setIsReady(currentTracks.lofi && currentTracks.noise);
+	}, [currentTracks])
 
 	useEffect(() => { 
 		const newPreferences = user.attrs.preferences;
@@ -118,13 +123,21 @@ const LofiFocus = (props) => {
 
 	return tracks ? ( 
 		<LofiFocusWrapper> 
+
+			{ isReady ?
 			<div onClick = {handlePlayPause} className = "playPauseButton" title = "Listen to original lofi music with some background noise, get work done."> 
-				{ isPlaying ? 
+				{isPlaying ? 
 					<Pause size = {50}/>
 					:
 					<Play size = {50}/>
 				}
 			</div>
+			:
+			<div className = "playPauseButton" title = "Loading tracks."> 
+				<Circle size = {50}/>
+			</div>
+
+			}
 			<div className = "volumeSliders">
 				<Player name = "lofi" 
 					isPlaying = {isPlaying}
@@ -168,6 +181,7 @@ const mstp = (state) => {
 	return { 
 		user: state.auth.User,
 		tracks: state.tracks.allTracks,
+		currentTracks: state.tracks.currentTracks,
 		sessionCount: state.sessions.count
 	}
 }
