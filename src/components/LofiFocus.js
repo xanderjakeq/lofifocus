@@ -72,11 +72,20 @@ const LofiFocus = (props) => {
 	}
 
 	const handleTrackChange = (name, track) => {
-		setUpdatedPreferences({
-			...updatedPreferences,
-			// [`${name}Selected`]: track
-			"noiseSelected": track
-		});
+		// setUpdatedPreferences({
+		// 	...updatedPreferences,
+		// 	// [`${name}Selected`]: track
+		// 	"noiseSelected": track
+		// });
+		if (name === 'lofi') {
+			return;
+		} else {
+			setUpdatedPreferences({
+				...updatedPreferences,
+				// [`${name}Selected`]: track
+				"noiseSelected": track
+			});
+		}
 	}
 
 	const getDuration = () => {
