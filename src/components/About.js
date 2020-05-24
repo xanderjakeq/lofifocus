@@ -35,7 +35,7 @@ const About = (props) => {
 					</ul>
 
 					<p>
-						new music every two weeks
+                        web monetized with <a href = "https://coil.com/">coil</a>. subscribe to access all tracks.
 					</p>
 
 					<p>

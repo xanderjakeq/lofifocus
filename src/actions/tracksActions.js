@@ -16,7 +16,7 @@ export const getTracks = (license) => async (dispatch) => {
 		type: GETTING_TRACKS
 	});
 
-	const isMember = await isLicenseValid(license);
+	const isMember = license === "monetized" ? true : await isLicenseValid(license);
 
 	let noiseTracks = await axios.get(`${api}/noisetracks`, {
 		params: {

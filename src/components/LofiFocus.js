@@ -34,6 +34,11 @@ const LofiFocus = (props) => {
 
 	useEffect (() => { 
 		getTracks(license);
+
+        document.monetization.addEventListener('monetizationstart', (event) => {
+            getTracks("monetized");
+        });
+        
 	}, []);
 
 	useEffect (() => {
