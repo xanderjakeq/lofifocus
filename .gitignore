@@ -54,3 +54,6 @@ notes.md
 
 # Ignore firebase cache
 .firebase
+
+# rust
+rust_server/target/
