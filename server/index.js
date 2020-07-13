@@ -30,7 +30,7 @@ setup({
 });
 
 app.get("/", (req, res) => {
-    res.send('Wazzzaaaa');
+    res.send('Wazzza');
 })
 
 app.listen(process.env.PORT || 5000);
