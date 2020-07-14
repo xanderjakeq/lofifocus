@@ -23,6 +23,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+console.log(process.env.MONGO_DB_URL)
+
 setup({
     mongoDBUrl: process.env.MONGO_DB_URL
 }).then(RadiksController => {
