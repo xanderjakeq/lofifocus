@@ -13,19 +13,19 @@ const db = firebase.database();
 const noiseRef = db.ref(audioTypes.noise);
 const lofiRef = db.ref(audioTypes.lofi);
 
-var whitelist = ['https://strtrf.firebaseapp.com', 'http://localhost:3000', 'https://lofifocus.io', 'http://127.0.0.1:3000'];
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+const allowlist = ['http://localhost:3000/', 'https://lofifocus.io/'];
+
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('referer')) !== -1) {
+    corsOptions = { origin: true }
+  } else {
+    corsOptions = { origin: false }
   }
-}
+  callback(null, corsOptions)
+} 
 
-
-app.use(cors(corsOptions));
+app.use(cors(corsOptionsDelegate));
 
 app.get('/noisetracks', async (req, res) => {
   const isMember = req.query.isMember === 'true';
@@ -65,11 +65,14 @@ app.get('/track/:type/:name', async (req, res) => {
 
   res.set(`can't-be-evil`, true);
 
-  const readStream = file.createReadStream();
-  readStream.on('end', () => {
-    res.end();
-  }).pipe(res);
-
+  try {
+      const readStream = file.createReadStream();
+      readStream.on('end', () => {
+        res.end();
+      }).pipe(res);
+  } catch(err) {
+      console.log(err)
+  }
 });
 
 module.exports = app;
