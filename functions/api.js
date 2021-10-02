@@ -15,6 +15,8 @@ const lofiRef = db.ref(audioTypes.lofi);
 
 const allowlist = ['http://localhost:3000/', 'https://lofifocus.io/'];
 
+const freeTracks = 5;
+
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('referer')) !== -1) {
@@ -36,7 +38,7 @@ app.get('/noisetracks', async (req, res) => {
       res.json(snap.val());
     });
   } else { 
-    noiseRef.limitToFirst(10).once('value', snap => { 
+    noiseRef.limitToFirst(freeTracks).once('value', snap => { 
       res.json(snap.val());
     });
   }
@@ -51,7 +53,7 @@ app.get('/lofitracks', (req, res) => {
       res.json(snap.val());
     });
   } else { 
-    lofiRef.limitToFirst(10).once('value', snap => { 
+    lofiRef.limitToFirst(freeTracks).once('value', snap => { 
       res.json(snap.val());
     });
   }
